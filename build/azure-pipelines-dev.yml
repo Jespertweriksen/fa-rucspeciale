@@ -13,7 +13,11 @@ variables:
   workingDirectory: '$(System.DefaultWorkingDirectory)/'
 
 # Agent pool
+<<<<<<< HEAD
 pool: 'Azure Pipelines'
+=======
+pool: 'Default'
+>>>>>>> ca609b74154d4e5eaed70c44e122c806ea18e9e2
 # Could also be an image name from the built-in agents 
 # pool:
 #   vmImage: 'vs2017-win2016'
