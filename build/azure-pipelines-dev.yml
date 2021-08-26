@@ -4,16 +4,16 @@ trigger:
 
 variables:
   # Azure subscription id from the 
-  azureSubscription: 'name-of-service-connection'
+  azureSubscription: 'Azure subscription 1'
 
   # Function app name from the creation script
-  functionAppName: 'afa-functionstest-dev-001'
+  functionAppName: 'afa-RUCSpecialeFunctionProject-dev-001'
 
   # Working Directory
   workingDirectory: '$(System.DefaultWorkingDirectory)/'
 
 # Agent pool
-pool: 'Pool name'
+pool: 'ruc-speciale-pool'
 # Could also be an image name from the built-in agents 
 # pool:
 #   vmImage: 'vs2017-win2016'
