@@ -11,7 +11,7 @@ using Microsoft.Azure.WebJobs.Extensions.Storage;
 
 namespace RUCSpecialeFunctionProject
 {
-    public static class HelloWorld
+    public static class CreateBooking
     {
         [FunctionName("Test")]
         public static async Task<IActionResult> Run(
