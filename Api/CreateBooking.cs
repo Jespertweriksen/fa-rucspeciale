@@ -17,10 +17,10 @@ namespace RUCSpecialeFunctionProject
         [FunctionName("CreateBooking")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
-            [ServiceBus(queueOrTopicName: ServiceBusQueues.demoQueue, Connection = "SBConnection")] IAsyncCollector<dynamic> addToQueue,
+            [ServiceBus(queueOrTopicName: ServiceBusQueues.UserHandlerQueue, Connection = "SBConnection")] IAsyncCollector<dynamic> addToQueue,
             ILogger log)
         {
-             var id = Guid.NewGuid().ToString("N");
+            var id = Guid.NewGuid().ToString("N");
             string email = req.Query["email"];
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
@@ -42,7 +42,7 @@ namespace RUCSpecialeFunctionProject
 
             // Add to queue and return response
             await addToQueue.AddAsync(reservationModel);
-            log.LogDebug($"Sent message to the topic {ServiceBusQueues.demoQueue} with the message: {message}");
+            log.LogDebug($"Sent message to the topic {ServiceBusQueues.UserHandlerQueue} with the message: {message}");
             return new OkObjectResult(responseMessage);
         }
 
