@@ -11,7 +11,7 @@ namespace RUCSpeciale
         [FunctionName("UserHandler")]
         public static async Task RunASync(
         [ServiceBusTrigger(ServiceBusQueues.UserHandlerQueue, Connection = "SBConnection")]ReservationModel reservationModel, 
-        [ServiceBus(queueOrTopicName: ServiceBusQueues.BookingCreatedQueue)] IAsyncCollector<dynamic> addToQueue,
+        [ServiceBus(queueOrTopicName: ServiceBusQueues.BookingCreatedQueue, Connection = "SBConnection")] IAsyncCollector<dynamic> addToQueue,
             ILogger log)
         {
             log.LogInformation($"C# ServiceBus queue trigger function processed message: {reservationModel.Id} {reservationModel.Email}");
@@ -22,7 +22,7 @@ namespace RUCSpeciale
                     Id = reservationModel.Id
                 };
             
-               // await addToQueue.AddAsync(reservationModel.Email);
+               await addToQueue.AddAsync(reservation);
             
         }
     }
