@@ -8,34 +8,55 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Microsoft.Azure.WebJobs.Extensions.Storage;
+using RUCSpeciale;
 
 namespace RUCSpecialeFunctionProject
 {
     public static class CreateBooking
     {
-        [FunctionName("Test")]
+        [FunctionName("CreateBooking")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
-            [ServiceBus(queueOrTopicName: "rucspeciale-queue", Connection = "SBConnection")] IAsyncCollector<dynamic> addToQueue,
+            [ServiceBus(queueOrTopicName: ServiceBusQueues.demoQueue, Connection = "SBConnection")] IAsyncCollector<dynamic> addToQueue,
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
-
-
-            string name = req.Query["name"];
-
+             var id = Guid.NewGuid().ToString("N");
+            string email = req.Query["email"];
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
+            email ??= data?.email;
 
-            await addToQueue.AddAsync($"Name passed is: {name}");
-            log.LogDebug($"Sent message to the queue 'rucspeciale-queue' with the message: {name}");
+            // Validate
+            if (!IsValidEmail(email)) return new BadRequestObjectResult("Signup failed: Incorrect email");
 
-            string responseMessage = string.IsNullOrEmpty(name)
+            // 
+            string responseMessage = string.IsNullOrEmpty(email)
                 ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {name}. This HTTP triggered function executed successfully.";
+                : $"Hello, {email}. You have successfully signed up for X petition." + " ID: " + id;
+            var message = email + ";" + id;
+            ReservationModel reservationModel = new ReservationModel()
+            {
+                Email = email,
+                Id = id
+            };
 
+            // Add to queue and return response
+            await addToQueue.AddAsync(reservationModel);
+            log.LogDebug($"Sent message to the topic {ServiceBusQueues.demoQueue} with the message: {message}");
             return new OkObjectResult(responseMessage);
+        }
+
+         public static bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

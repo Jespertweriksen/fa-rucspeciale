@@ -5,12 +5,12 @@ using Microsoft.Extensions.Logging;
 
 namespace RUCSpeciale
 {
-    public static class MyServicebusTrigger
+    public static class ConfirmBooking
     {
-        [FunctionName("MyServicebusTrigger")]
-        public static void Run([ServiceBusTrigger("rucspeciale-queue", Connection = "SBConnection")]string myQueueItem, ILogger log)
+        [FunctionName("ConfirmBooking")]
+        public static void Run([ServiceBusTrigger("rucspeciale-queue", Connection = "SBConnection")]ReservationModel reservationModel, ILogger log)
         {
-            log.LogInformation($"C# ServiceBus queue trigger function processed message: {myQueueItem}");
+            log.LogInformation($"C# ServiceBus queue trigger function processed message: {reservationModel.Id} {reservationModel.Email}");
         }
     }
 }

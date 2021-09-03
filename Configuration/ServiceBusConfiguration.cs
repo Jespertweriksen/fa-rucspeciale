@@ -1,4 +1,4 @@
-namespace DN.AzureFunctions.Configuration
+namespace RUCSpeciale
 {
     /// <summary>
     /// ServiceBus Topic Definitions. 
@@ -17,7 +17,7 @@ namespace DN.AzureFunctions.Configuration
     /// <summary>
     /// Generated from T4 template ServiceBusConfigurations.tt  
     /// </summary>
-      
+      public const string demoQueue = "rucspeciale-queue";
     }
     /// <summary>
     /// ServiceBus Subscription Definitions.
