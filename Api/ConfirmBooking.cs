@@ -17,7 +17,7 @@ namespace RUCSpeciale
                     Id = reservationModel.Id
                 };
 
-            log.LogInformation($"C# ServiceBus queue trigger function processed message: {reservation.Id} {reservation.Email}");
+            log.LogInformation($"Confirmed booking for mail: {reservation.Id} {reservation.Email}");
         }
     }
 }

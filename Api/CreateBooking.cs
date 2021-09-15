@@ -47,7 +47,7 @@ namespace RUCSpecialeFunctionProject
 
             // Add to queue and return response
             await addToQueue.AddAsync(reservationModel);
-            log.LogDebug($"Sent message to the topic {ServiceBusQueues.UserHandlerQueue} with the message: {message}");
+            log.LogDebug($"Checking email with userhandler: {message}");
             return new OkObjectResult(responseMessage);
         }
 

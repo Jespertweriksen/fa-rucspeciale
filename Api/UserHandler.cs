@@ -14,7 +14,7 @@ namespace RUCSpeciale
         [ServiceBus(queueOrTopicName: ServiceBusQueues.BookingCreatedQueue, Connection = "SBConnection")] IAsyncCollector<dynamic> addToQueue,
             ILogger log)
         {
-            log.LogInformation($"C# ServiceBus queue trigger function processed message: {reservationModel.Id} {reservationModel.Email}");
+            log.LogInformation($"Userhandler handled email: {reservationModel.Id} {reservationModel.Email}");
 
             var reservation = new ReservationModel
                 {
