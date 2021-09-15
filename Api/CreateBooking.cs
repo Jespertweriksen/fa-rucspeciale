@@ -29,15 +29,20 @@ namespace RUCSpecialeFunctionProject
             // Validate
             if (!IsValidEmail(email)) return new BadRequestObjectResult("Signup failed: Incorrect email");
 
+            var dummyEmail = "jtw@novicell.dk";
+            string badRequestResponse = "exists";
+
+            if(email == dummyEmail){
+                return new BadRequestObjectResult(badRequestResponse); 
+            }
             // 
-            string responseMessage = string.IsNullOrEmpty(email)
-                ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {email}. You have successfully signed up for X petition." + " ID: " + id;
-            var message = email + ";" + id;
+            string responseMessage = string.IsNullOrEmpty(email)? 
+            "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
+            : $"Hello, {email}. You have successfully signed up for X petition.";
+            var message = email;
             ReservationModel reservationModel = new ReservationModel()
             {
-                Email = email,
-                Id = id
+                Email = email
             };
 
             // Add to queue and return response
