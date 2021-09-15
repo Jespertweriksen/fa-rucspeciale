@@ -30,7 +30,7 @@ namespace RUCSpecialeFunctionProject
             if (!IsValidEmail(email)) return new BadRequestObjectResult("Signup failed: Incorrect email");
 
             var dummyEmail = "jtw@novicell.dk";
-            string badRequestResponse = "exists";
+            string badRequestResponse = "Email already exists";
 
             if(email == dummyEmail){
                 return new BadRequestObjectResult(badRequestResponse); 
