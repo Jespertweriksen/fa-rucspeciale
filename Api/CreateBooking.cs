@@ -32,7 +32,7 @@ namespace RUCSpecialeFunctionProject
             var dummyEmail = "jtw@novicell.dk";
             string badRequestResponse = "Email already exists";
 
-            if(email == dummyEmail){
+            if(email != dummyEmail){
                 return new BadRequestObjectResult(badRequestResponse); 
             }
             // 
