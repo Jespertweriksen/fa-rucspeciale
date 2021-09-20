@@ -1,4 +1,5 @@
 using System;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Host;
@@ -14,7 +15,8 @@ namespace RUCSpeciale
         [ServiceBus(queueOrTopicName: ServiceBusQueues.BookingCreatedQueue, Connection = "SBConnection")] IAsyncCollector<dynamic> addToQueue,
             ILogger log)
         {
-            log.LogInformation($"Userhandler handled email: {reservationModel.Id} {reservationModel.Email}");
+            log.LogInformation($"Userhandler handled email: {reservationModel.Id} {reservationModel.Email} {reservationModel.First_Name} {reservationModel.Last_Name} {reservationModel.Phone} {reservationModel.Postal}");
+            
 
             var reservation = new ReservationModel
                 {

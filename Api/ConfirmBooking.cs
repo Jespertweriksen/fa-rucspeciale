@@ -17,7 +17,7 @@ namespace RUCSpeciale
                     Id = reservationModel.Id
                 };
 
-            log.LogInformation($"Confirmed booking for mail: {reservation.Id} {reservation.Email}");
+            log.LogInformation($"Confirmed booking for mail: {reservation.Id} {reservation.Email}  {reservation.First_Name}");
         }
     }
 }
