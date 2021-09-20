@@ -37,10 +37,24 @@ namespace RUCSpeciale
                         Postal = (int)dataReader.GetValue(5)
 
                     };
-                      return r;
+                        connection.Close();
+                        return r;
                     }       
                 }
                 return null;
         }
-    }
+          public ReservationModel saveNewUser(ReservationModel reservationModel){
+                 
+                 using (SqlConnection connection = new SqlConnection(Environment.GetEnvironmentVariable("SqlConnectionString")))  
+                {  
+                    connection.Open();
+                    SqlCommand command;
+                    var sql = $"INSERT INTO db.guest (email, first_name, last_name, phone, postal) VALUES ('{reservationModel.Email}', '{reservationModel.First_Name}', '{reservationModel.Last_Name}', '{reservationModel.Phone}', '{reservationModel.Postal}')";
+                    command = new SqlCommand(sql, connection);
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                    }      
+                      return null; 
+                }
+        }
 }

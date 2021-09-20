@@ -42,10 +42,7 @@ namespace RUCSpecialeFunctionProject
 
             // Validate
             if (!IsValidEmail(email)) return new BadRequestObjectResult("Signup failed: Incorrect email");
-
-           
-
-            if (First_Name != null){
+            if (!string.IsNullOrEmpty(First_Name)){
                 ReservationModel reservationModel = new ReservationModel()
                 {
                 Email = email,
@@ -55,9 +52,7 @@ namespace RUCSpecialeFunctionProject
                 Postal = Int32.Parse(Postal)
                 };
                 await addToQueue.AddAsync(reservationModel);
-                return new OkObjectResult(reservationModel);
             }
-
             var guest = dataBaseHandler.rObject(email);
             if (guest == null){
                 return new BadRequestObjectResult("Need more info");
@@ -72,15 +67,14 @@ namespace RUCSpecialeFunctionProject
                 Postal = guest.Postal
             };
             await addToQueue.AddAsync(reservationModel);
-              // 
             string responseMessage = string.IsNullOrEmpty(email)? 
             "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
             : $"Hello, {email}. You have successfully signed up for X petition.";
-
             return new OkObjectResult(responseMessage);
             }
 
-            
+
+         
 
         }
 

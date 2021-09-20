@@ -16,7 +16,16 @@ namespace RUCSpeciale
             ILogger log)
         {
             log.LogInformation($"Userhandler handled email: {reservationModel.Id} {reservationModel.Email} {reservationModel.First_Name} {reservationModel.Last_Name} {reservationModel.Phone} {reservationModel.Postal}");
-            
+            DataBaseHandler dataBaseHandler = new DataBaseHandler();
+
+            if (dataBaseHandler.rObject(reservationModel.Email) == null){
+                dataBaseHandler.saveNewUser(reservationModel);
+                log.LogInformation("Saving new user + reservation");
+            }else{
+                log.LogInformation("Saving existing user + reservartion");
+            }
+
+
 
             var reservation = new ReservationModel
                 {
